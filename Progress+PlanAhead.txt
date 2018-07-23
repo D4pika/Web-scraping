@@ -1,0 +1,24 @@
+Meeting 
+
+Scraping and Crawling code ready 
+
+Plan
+------------------------------------------------------------------------------------------
+-------------
+PART 1 
+-------------
+-- Get python and jupyter notebook onto all the PCs in DCMME 
+-- Split up the websites into batches
+-- Different students get different batches 
+-- Run the code and keep checks 
+------------------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------------------
+-------------
+PART 2 
+--------------
+-- Categorization of pages (based on type, equipment, products) --> binary classificaition 
+-- Using keywords we should be able to find links 
+-- Location of the companies (address, city, county, state, pin) 
+-------------------------------------------------------------------------------------------
