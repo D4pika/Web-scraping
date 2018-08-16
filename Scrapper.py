@@ -379,10 +379,12 @@ def web_crawler_all(excel_path, sheet, web_col, index_col, parent_col,  output_f
 
         tic = time.time()
         try:
-            websites= pd.read_csv(output_folder + '/' + str(int(num_Id)) + '_' + str(original_url) + '.csv')
-            print("website is already crawled")
-        except:
             websites, num_Id = crawl(original_url ,num_Id ,output_folder)
+            #websites= pd.read_csv(output_folder + '/' + str(int(num_Id)) + '_' + str(original_url) + '.csv')
+            #print("website is already crawled")
+        except:
+            pass
+
         toc = time.time()
         print("Time taken to crawl all links: "  + str(toc - tic))
 
@@ -416,38 +418,35 @@ def web_scraper_all(df, crawled_website_path, scraped_website_path, from_website
     #loop over all the websites and extract child links. Store them in JSON files
 
     for index, rows in df.iterrows():
-        filename = crawled_website_path + '/'+ str(website_index)+ '_' + str(get_base_url(website_name)) + ".csv"
         #setting the website index and name
-        if(pd.read_csv(filename)):
-            continue
-        else:
-            website_index = int(rows[0] )
-            website_name = rows[web_col]
+        website_index = int(rows[0])
+        website_name = rows[web_col]
+        filename = crawled_website_path + '/'+ str(website_index)+ '_' + str(get_base_url(website_name)) + ".csv"
 
-            #generating filename and getting the csv file of child links
+        #generating filename and getting the csv file of child links
 
-            df_of_child_links = pd.read_csv(filename)
-            print(filename,df_of_child_links )
-            #executing the scrape function
-            flag = scrape(df_of_child_links , scraped_website_path, website_index, website_name)
+        df_of_child_links = pd.read_csv(filename)
+        print(filename,df_of_child_links )
+        #executing the scrape function
+        flag = scrape(df_of_child_links , scraped_website_path, website_index, website_name)
 
-            #checkpoint to see if scraping is complete
-            if flag == 1 :
-                print(website_name + ' has been scraped successfully')
-                #print('scraping percentage complete = ' + str((i/to_website)*100) + '%')
-                flag = 0
+        #checkpoint to see if scraping is complete
+        if flag == 1 :
+            print(website_name + ' has been scraped successfully')
+            #print('scraping percentage complete = ' + str((i/to_website)*100) + '%')
+            flag = 0
 
 
 #executing the crawler function ---------------------------------------------------------------------------------------
 
 excel_path = 'batchwise_companies.xlsx'
-sheet = 'batch21'
+sheet = 'batch26'
 web_col = 2
 index_col = 0
 parent_col = 1
 output_folder = 'Crawled'
 from_website = 1
-to_website = 4
+to_website = 5
 
 web_crawler_all(excel_path,sheet, web_col, index_col, parent_col,output_folder, from_website, to_website)
 
@@ -459,15 +458,15 @@ sendemail(from_addr = 'krannertdcmme@gmail.com', to_addr_list = ['mihirbhatia999
 print("email sent")
 
 
-'''
+
 #executing the scraper function-----------------------------------------------------------------------------------------
 excel_path = 'batchwise_companies.xlsx'
-sheet = 'batch21'
+sheet = 'batch26'
 df = pd.read_excel(excel_path , sheet_name=sheet)
 crawled_website_path = 'Crawled'
 scraped_website_path = 'Scraped'
 from_website = 1
-to_website = 4
+to_website = 5
 web_col = 2 
 #print(df)
 web_scraper_all(df, crawled_website_path, scraped_website_path, from_website, to_website,web_col)
@@ -476,7 +475,7 @@ web_scraper_all(df, crawled_website_path, scraped_website_path, from_website, to
 sendemail(from_addr = 'krannertdcmme@gmail.com', to_addr_list = ['mihirbhatia999@gmail.com'],
           cc_addr_list = ['djindal@purdue.edu'],subject = 'Test mail',message = 'this is a test mail 2 using Python',
           login = 'krannertdcmme', password = 'Abc12345!', smtpserver = 'smtp.gmail.com:587')
-'''
+
 
 # function to crawl + scrape everything-------------------------------------------------------------------
 
