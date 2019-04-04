@@ -1,2 +1,2 @@
-# Web-scrapping
-Scrapper for WHIN
+# Web-scraping
+Scraper for WHIN
